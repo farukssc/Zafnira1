@@ -1,0 +1,137 @@
+{
+  "entities": {
+    "Category": {
+      "title": "Category",
+      "description": "Spice product categories",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "nameAr": { "type": "string" },
+        "slug": { "type": "string" },
+        "image": { "type": "string" },
+        "productCount": { "type": "number" }
+      },
+      "required": ["id", "nameEn", "nameAr", "slug"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Spices and mixed products details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "nameAr": { "type": "string" },
+        "descriptionEn": { "type": "string" },
+        "descriptionAr": { "type": "string" },
+        "sku": { "type": "string" },
+        "category": { "type": "string" },
+        "images": { "type": "array" },
+        "priceSAR": { "type": "number" },
+        "stock": { "type": "number" },
+        "variants": { "type": "array" },
+        "rating": { "type": "number" },
+        "reviewsCount": { "type": "number" },
+        "isBestSeller": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" }
+      },
+      "required": ["id", "nameEn", "nameAr", "category", "priceSAR", "stock"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase orders",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerInfo": { "type": "object" },
+        "shippingAddress": { "type": "object" },
+        "items": { "type": "array" },
+        "subtotalSAR": { "type": "number" },
+        "discountSAR": { "type": "number" },
+        "deliveryChargeSAR": { "type": "number" },
+        "taxSAR": { "type": "number" },
+        "totalSAR": { "type": "number" },
+        "totalUSD": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"] },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "customerInfo", "shippingAddress", "items", "totalSAR", "status", "paymentMethod"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Discount vouchers and promo codes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "type": { "type": "string", "enum": ["percentage", "fixed"] },
+        "value": { "type": "number" },
+        "minOrderSAR": { "type": "number" },
+        "maxDiscountSAR": { "type": "number" },
+        "usageLimit": { "type": "number" },
+        "usedCount": { "type": "number" },
+        "expiryDate": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "code", "type", "value", "expiryDate"]
+    },
+    "Popup": {
+      "title": "Popup",
+      "description": "Dynamic marketing and warning popups",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["welcome", "coupon", "newsletter", "announcement"] },
+        "titleEn": { "type": "string" },
+        "titleAr": { "type": "string" },
+        "contentEn": { "type": "string" },
+        "contentAr": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "couponId": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "type", "titleEn", "titleAr", "isActive"]
+    },
+    "CMSConfig": {
+      "title": "CMSConfig",
+      "description": "Flexible admin-managed website content and options",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "data": { "type": "object" }
+      },
+      "required": ["id"]
+    }
+  },
+  "firestore": {
+    "categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Collection of spice categories"
+    },
+    "products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of spice SKU details"
+    },
+    "orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of orders"
+    },
+    "coupons/{couponId}": {
+      "schema": "Coupon",
+      "description": "Vouchers available for checkout"
+    },
+    "popups/{popupId}": {
+      "schema": "Popup",
+      "description": "Popups displayed to shop customers"
+    },
+    "cms_config/{configId}": {
+      "schema": "CMSConfig",
+      "description": "Content blocks and global parameter sets"
+    }
+  }
+}
